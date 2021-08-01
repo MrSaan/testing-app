@@ -9,3 +9,8 @@ article, p {
     line-height: 1.6;
 
 }
+
+article + article {
+    border-top: #222222;
+    margin-top: 1rem;
+}
