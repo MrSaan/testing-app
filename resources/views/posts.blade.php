@@ -1,5 +1,23 @@
 <x-layout>
-    @foreach ($posts as $post)
+
+    @include('_posts-header')
+
+    <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
+        @if ($posts->count())
+            <x-posts-grid :posts='$posts'/>
+            
+        @else 
+            <div class="text-center">
+                Potingan belum ada coba kembali lagi nanti...
+            </div>
+
+        @endif
+       
+        
+    </main>
+
+    {{-- di bawah adalah bagian belajar tahap awal --}}
+    {{-- @foreach ($posts as $post)
         <article>
             <h1>
                 <a href="/post/{{ $post->slug }}">
@@ -13,5 +31,5 @@
                 {!! $post->slug !!}
             </div>
         </article>
-    @endforeach
+    @endforeach --}}
 </x-layout>
