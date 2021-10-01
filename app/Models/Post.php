@@ -12,16 +12,16 @@ class Post extends Model
     protected $guarded = ['id'];
     // protected $fillable = ['title', 'excerpt', 'body'];
 
-
+    protected $with = ['category','author'];
     // Foreign id
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function user()
+    public function author() //user_id adalahh foreign key, author 'custom name'
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
 

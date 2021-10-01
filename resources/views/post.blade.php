@@ -3,7 +3,7 @@
         <strong> {{ $post->title }} </strong>
     </h1>
     <div>
-        by <a href="/{{ $post->user->name }}">{{ $post->user->name }}</a> in
+        by <a href="/authors/{{ $post->author->username }}">{{ $post->author->name }}</a> in
         <a href="/category/{{ $post->category->slug }}">{{ $post->category->name }}</a>
     </div>    
     <article>

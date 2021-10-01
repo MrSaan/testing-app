@@ -6,8 +6,9 @@
                     {!! $post->title !!}
                 </a>
             </h1>
+           
+            by <a href="/authors/{{ $post->author->username  }}">{{ $post->author->name }}</a> in
             <a href="/category/{{ $post->category->slug }}">{{ $post->category->name }}</a>
-
             <div>
                 {!! $post->slug !!}
             </div>
