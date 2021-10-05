@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -20,33 +21,14 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', function ()
-{
-    return view( 'posts', [
-        'posts' => Post::latest('created_at')->get(),
-        'categories' => Category::all()
-    ]);
-})->name('home');
+Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('/post/{post:slug}', [PostController::class, 'viewPost']);
 
-Route::get('/post/{post:slug}', function (Post $post) // Post::where('slug', $post)
-{
-    return view('post', [
-        'post' => $post
-    ]);
-});
 
-Route::get('category/{category:slug}', function (Category $category)
-{
-    return view( 'posts', [
-        'posts' => $category->posts,
-        'currentCategory' => $category,
-        'categories' => Category::all()
-    ]);
-})->name('category');
-
-Route::get('authors/{author:username}', function (User $author)
-{
-    return view( 'posts', [
-        'posts' => $author->posts
-    ]);
-});
+// Route::get('author/{author:username}', function (User $author)
+// {
+//     return view( 'posts.index', [
+//         'posts' => $author->posts
+//     ]);
+// });
+// Route::get('category/{category:slug}', [PostController::class, 'category'])->name('category');
