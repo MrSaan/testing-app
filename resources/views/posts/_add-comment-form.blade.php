@@ -19,11 +19,11 @@
             </div>
             
             @error('body')
-                {{ $message }}
+               <span class="text-xs text-red-500"> {{ $message }}</span>
             @enderror
 
             <div class="flex justify-end pt-6 mt-6 border-t border-gray-200 ">
-                <x-submit-button>Post</x-submit-button>
+                <x-form.button>Post</x-form.button>
             </div>
         </form>
     </x-panel>

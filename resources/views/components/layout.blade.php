@@ -21,22 +21,36 @@
             </div>
 
             <div class="mt-8 md:mt-0 flex items-center">
-                @auth <!-- if ( auth()->check() ) -->
-                    <span class="text-xs font-bold">Welcome, {{ auth()->user()->name }}!</span>  
-                    
-                    <!-- log out -->
-                    <form action="/logout" method="post" class="text-xs text-blue-500 font-semibold ml-6">
-                        @csrf
+                @auth
+                <!-- if ( auth()->check() ) -->
 
-                        <button type="submit">Log Out</button>
+                <x-dropdown>
+                    <x-slot name="trigger">
+                        <button class="text-xs font-bold">Welcome, {{ auth()->user()->name }}!</button>
+                    </x-slot>
 
-                    </form>
+                    <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard
+                    </x-dropdown-item>
+                    <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post
+                    </x-dropdown-item>
+                    <!-- Logout tricky menggunakan Alphine JS -->
+                    <x-dropdown-item href="#" @click.prevent="document.querySelector('#logout-form').submit()">Log Out
+                    </x-dropdown-item>
+
+                </x-dropdown>
+
+                <!-- log out -->
+                <form id="logout-form" action="/logout" method="post" class="hidden">
+                    @csrf
+                </form>
+
                 @else
-                    <a href="/register" class="text-xs font-bold uppercase">Register</a>
-                    <a href="/login" class="text-xs font-bold uppercase ml-6">Login</a>
+                <a href="/register" class="text-xs font-bold uppercase">Register</a>
+                <a href="/login" class="text-xs font-bold uppercase ml-6">Login</a>
                 @endauth
 
-                <a href="#newslatter" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
+                <a href="#newsletter"
+                    class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
                     Subscribe for Updates
                 </a>
             </div>
@@ -44,7 +58,8 @@
 
         {{ $slot }}
 
-        <footer id="newslatter" class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
+        <footer id="newsletter"
+            class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
             <img src="./images/lary-newsletter-icon.svg" alt="" class="mx-auto -mb-6" style="width: 145px;">
             <h5 class="text-3xl">Stay in touch with the latest posts</h5>
             <p class="text-sm mt-3">Promise to keep the inbox clean. No bugs.</p>
@@ -52,19 +67,25 @@
             <div class="mt-10">
                 <div class="relative inline-block mx-auto lg:bg-gray-200 rounded-full">
 
-                    <form method="POST" action="#" class="lg:flex text-sm">
+                    <form method="POST" action="/newsletter" class="lg:flex text-sm">
+                        @csrf
                         <div class="lg:py-3 lg:px-5 flex items-center">
                             <label for="email" class="hidden lg:inline-block">
                                 <img src="/images/mailbox-icon.svg" alt="mailbox letter">
                             </label>
 
-                            <input id="email" type="text" placeholder="Your email address"
-                                   class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
+                            <div>
+                                <input id="email" name="email" type="text" placeholder="Your email address"
+                                    class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
+
+                                @error('email')
+                                <span class="text-xs text-red-500"> {{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
 
                         <button type="submit"
-                                class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8"
-                        >
+                            class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8">
                             Subscribe
                         </button>
                     </form>

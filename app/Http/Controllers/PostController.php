@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -17,13 +18,6 @@ class PostController extends Controller
         ]);
     }
 
-    public function viewPost( Post $post)
-    {
-        return view('posts.show', [
-            'post' => $post
-        ]);
-    }
-
     // category filter newbie
     // public function category( Category $category)
     // {
@@ -33,4 +27,12 @@ class PostController extends Controller
     //         'categories' => Category::all()
     //     ]);
     // }
+
+    public function viewPost( Post $post)
+    {
+        return view('posts.show', [
+            'post' => $post
+        ]);
+    }
+
 }
